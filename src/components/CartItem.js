@@ -4,7 +4,8 @@ import { IoMdClose, IoMdRemove, IoMdAdd } from "react-icons/io";
 import { CartContext } from "../contexts/CartContext";
 
 const CartItem = ({ item }) => {
-  const {removeFromCart} = useContext(CartContext);
+  const { removeFromCart, increaseAmount, decreaseAmount } =
+    useContext(CartContext);
 
   // another destructure of item ... it just list all the needed info and display it
   const { id, title, image, price, amount } = item;
@@ -26,7 +27,10 @@ const CartItem = ({ item }) => {
               {title}
             </Link>
             {/* remove icon */}
-            <div onClick={() => removeFromCart(id)} className="text-xl cursor-pointer ">
+            <div
+              onClick={() => removeFromCart(id)}
+              className="text-xl cursor-pointer "
+            >
               <IoMdClose className="text-gray-500 hover:text-red-500 transition " />
             </div>
           </div>
@@ -34,15 +38,21 @@ const CartItem = ({ item }) => {
             {/* qty */}
             <div className="flex flex-1 max-w-[100px]  items-center h-full border text-primary font-medium">
               {/* minus icon*/}
-              <div className="flex-1 h-full flex justify-center items-center cursor-pointer">
+              <div
+                onClick={() => decreaseAmount(id)}
+                className="flex-1 h-full flex justify-center items-center cursor-pointer h-full"
+              >
                 <IoMdRemove />
               </div>
               {/* Amount */}
               <div className="h-full flex justify-center items-center px-2">
                 {amount}
               </div>
-              {/* Add icon*/}
-              <div className="flex-1 h-full flex justify-center items-center cursor-pointer">
+              {/* plus icon*/}
+              <div
+                onClick={() => increaseAmount(id)}
+                className="flex-1 h-full flex justify-center items-center cursor-pointer"
+              >
                 <IoMdAdd />
               </div>
             </div>
@@ -51,9 +61,9 @@ const CartItem = ({ item }) => {
               $ {price}
             </div>
             {/* Final price */}
-            <div className="flex-1 flex justify-end items-center text-primary font-medium">{`${parseFloat(
-              price * amount
-            ).toFixed(2)}`}</div>
+            <div className="flex-1 flex justify-end items-center text-primary font-medium">
+              $ {`${parseFloat(price * amount).toFixed(2)}`}
+            </div>
           </div>
         </div>
       </div>
